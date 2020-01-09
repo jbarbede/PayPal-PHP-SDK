@@ -163,4 +163,28 @@ class Payout extends PayPalResourceModel
         return $ret;
     }
 
+    /**
+     * Obtain the status of a specific batch resource by passing the payout batch ID to the request URI. You can issue this call multiple times to get the current status.
+     *
+     * @param string $payoutBatchId
+     * @param ApiContext $apiContext is the APIContext for this call. It can be used to pass dynamic configuration and credentials.
+     * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
+     * @return PayoutBatch
+     */
+    public static function getFromLink($link, $apiContext = null, $restCall = null)
+    {
+        $payLoad = "";
+        $json = self::executeCall(
+            $link,
+            "GET",
+            $payLoad,
+            null,
+            $apiContext,
+            $restCall
+        );
+        $ret = new PayoutBatch();
+        $ret->fromJson($json);
+        return $ret;
+    }
+
 }
